@@ -21,7 +21,7 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route("/get_stat_sheet")
 def get_stat_sheet():
-    stat_sheet = mongo.db.stat_sheet.find()
+    stat_sheet = list(mongo.db.stat_sheet.find())
     return render_template("stat_sheet.html", stat_sheet=stat_sheet)
 
 
@@ -93,7 +93,7 @@ def logout():
 @app.route("/add_stat_sheet", methods=["GET", "POST"])
 def add_stat_sheet():
     if request.method == "POST":
-        sheet = {
+        stat_sheet = {
             "category_name": request.form.get("category_name"),
             "name": request.form.get("name"),
             "hit_points": request.form.get("hit_points"),
@@ -101,7 +101,7 @@ def add_stat_sheet():
             "armor_class": request.form.get("armor_class"),
             "created_by": session["user"]
         }
-        mongo.db.stat_sheet.insert_one(sheet)
+        mongo.db.stat_sheet.insert_one(stat_sheet)
         flash("Sheet Successfully Added")
         return redirect(url_for("get_stat_sheet"))
 
