@@ -1,6 +1,7 @@
 import os
-
-from flask import Flask, render_template, redirect, request, session, url_for
+from flask import (
+    Flask, flash, render_template,
+    redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 if os.path.exists("env.py"):
@@ -25,5 +26,5 @@ def get_stat_sheet():
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
-        port=int(os.environ.get("PORT")),
-        debug=True)
+            port=int(os.environ.get("PORT")),
+            debug=True)
