@@ -1,4 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1> Stat Sheet Goes Here</h1>
+
+<section class="recipes">
+    <div class="row">
+        {% for stat_sheet in stat_sheet %}
+        <div class="col s12 m6 l6 xl4">
+            <div class="card-large">
+                <div class="card-image">
+                    <img src="{{ stat_sheet.image_url }}">
+                </div>
+                <div class="card-content content center-align fira-sans">
+                    <h3>{{ stat_sheet.name }}
+                 
+                    </h3>
+                    <span>Category Name: {{ stat_sheet.category_name }}<br>
+                        Hit Points: {{ stat_sheet.hit_points }}<br>
+                        Created By {{ stat_sheet.created_by }}
+                    </span>
+                </div>
+               
+                
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
 {% endblock %}
