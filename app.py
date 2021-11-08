@@ -90,8 +90,21 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/add_stat_sheet")
+@app.route("/add_stat_sheet", methods=["GET", "POST"])
 def add_stat_sheet():
+    if request.method == "POST":
+        sheet = {
+            "category_name": request.form.get("category_name"),
+            "name": request.form.get("name"),
+            "hit_points": request.form.get("hit_points"),
+            "actions": request.form.get("actions"),
+            "armor_class": request.form.get("armor_class"),
+            "created_by": session["user"]
+        }
+        mongo.db.stat_sheet.insert_one(sheet)
+        flash("Sheet Successfully Added")
+        return redirect(url_for("get_stat_sheet"))
+
     categories = mongo.db.categories.find().sort("category_name", 1)
     return render_template("add_stat_sheet.html", categories=categories)
 
